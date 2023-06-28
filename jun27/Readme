@@ -1,1 +1,158 @@
 code is updated in next section of course. I have not updated the my code so see section 40. for updated code
+
+FAQ: How To Handle White-Space in Cookie Values?
+Question: 
+
+How to handle white-space in Cookie values?
+
+---
+
+Answer:
+
+To resolve this issue, we need to URL encode the cookie values.
+
+Java provides two classes for URL encoding and decoding: java.net.URLEncoder, java.net.URLDecoder.
+
+As an overview, these are the changes that need to be made.
+
+In the file: cookies-homepage.jsp:  add code to URL decode the cookie value
+
+    // decode cookie data ... handle case of languages with spaces in them
+    favLang = URLDecoder.decode(tempCookie.getValue(), "UTF-8");
+In the file: cookies-personalize-response.jsp: add code to URL encode the cookie value
+
+    // encode cookie data ... handle case of languages with spaces in them
+    favLang = URLEncoder.encode(favLang, "UTF-8");
+Here is the complete code for this example. Make note of the import statements in the JSP pages.
+
+====
+
+File: cookies-homepage.jsp
+
+<%@ page import="java.net.URLDecoder" %>
+ 
+<html>
+<body>
+ 
+<h3>Training Portal</h3>
+<!-- read the favorite programming language cookie -->
+ 
+<%
+    // the default ... if there are no cookies
+    String favLang = "Java";
+ 
+    // get the cookies from the browser request
+    Cookie[] theCookies = request.getCookies();
+    
+    // find our favorite language cookie
+    if (theCookies != null) {
+        
+        for (Cookie tempCookie : theCookies) {
+            
+            if ("myApp.favoriteLanguage".equals(tempCookie.getName())) {
+                
+                // decode cookie data ... handle case of languages with spaces in them
+                favLang = URLDecoder.decode(tempCookie.getValue(), "UTF-8");
+                
+                break;
+            }
+        }
+    }
+%>
+ 
+<!-- now show a personalized page ... use the "favLang" variable -->
+<!-- show new books for this lang -->
+<h4>New Books for <%= favLang %></h4>
+<ul>
+    <li>blah blah blah</li>
+    <li>blah blah blah</li>
+</ul>
+ 
+<h4>Latest News Reports for <%= favLang %></h4>
+<ul>
+    <li>blah blah blah</li>
+    <li>blah blah blah</li>
+</ul>
+ 
+<h4>Hot Jobs for <%= favLang %></h4>
+<ul>
+    <li>blah blah blah</li>
+    <li>blah blah blah</li>
+</ul>
+ 
+<hr>
+<a href="cookies-personalize-form.html">Personalize this page</a>
+ 
+</body>
+</html>
+====
+
+File: cookies-personalize-response.jsp
+
+<%@ page import="java.net.URLEncoder" %>
+ 
+<html>
+<head><title>Confirmation</title></head>
+ 
+<%
+    // read form data
+    String favLang = request.getParameter("favoriteLanguage");
+ 
+    // encode cookie data ... handle case of languages with spaces in them
+    favLang = URLEncoder.encode(favLang, "UTF-8");
+    
+    // create the cookie
+    Cookie theCookie = new Cookie("myApp.favoriteLanguage", favLang);
+    
+    // set the life span ... total number of seconds (yuk!)
+    theCookie.setMaxAge(60*60*24*365);    // <-- for one year
+    
+    // send cookie to browser
+    response.addCookie(theCookie);
+%>
+ 
+<body>
+    Thanks! We set your favorite language to: ${param.favoriteLanguage}
+    
+    <br/><br/>
+    
+    <a href="cookies-homepage.jsp">Return to homepage.</a>
+    
+</body>
+</html>
+====
+
+File: cookies-personalize-form.html  (added languages with multiple words and spaces)
+
+<html>
+ 
+<head>
+    <title>Personalize The Site</title>
+</head>
+ 
+<body>
+ 
+<form action="cookies-personalize-response.jsp">
+    Select your Favorite Programming Language
+ 
+    <select name="favoriteLanguage">
+            <option>Active Server Pages</option>
+            <option>Java</option>
+            <option>C#</option>
+            <option>    Common Business-Oriented Language</option>
+            <option>PHP</option>
+            <option>Ruby</option>
+            <option>Hypertext Markup Language</option>
+    </select>
+ 
+    <br/><br/>
+    
+    <input type="submit" value="Submit" />
+</form>
+ 
+</body>
+ 
+</html>
+---
+
+Please test this out and let me know your results.
