@@ -3,3 +3,4 @@ first learnt about connection pooling. Required for connecting multiple users to
 create project
 1. file -> dynamic web project. give project name -> next => remove entry and new entry with name src -> change content directory to WebContent -> tick mark on generate web.xml file
 2. copy mysql-connector-8.0.13.jar file into WebContent / WEB-INF / lib 
+3.
