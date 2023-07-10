@@ -5,4 +5,11 @@ create project
 2. copy mysql-connector-8.0.13.jar file into WebContent / WEB-INF / lib 
 3.
 4.
-5. for JSTL tags we sue JSTL jar files in WEB-INF
+5. for JSTL tags we USE JSTL jar files in WEB-INF
+6. we create welcomefilelist in web.xml and add entry of index.html, create index.html file 
+7. add student file changed and changes in file.
+  a. update list-students.jsp : add "add student" button
+  b. creating new form in add-student-form.jsp. copied add-student-style.css. we see all are in one line it is because we have used table. also added link to go to servlet page. do nothing add <a href="filename name">give link name</a>
+  c. updating studentcontrollerservlet : updating doget method as data from form will come using get request. in doget method read command and route code depending on command. command is variable we specified in
+      in add-students-form.jsp(ctrl+f). we did not specified any command variable in list-students so if request.getParameter is null we set command to "list". we route it using switch case.
+      created addStudent method in studentcontrollerservlet and studentdbutil. in studentdbutil created conn and statement and create & executed sql statement
