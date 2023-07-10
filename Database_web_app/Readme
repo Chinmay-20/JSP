@@ -4,3 +4,5 @@ create project
 1. file -> dynamic web project. give project name -> next => remove entry and new entry with name src -> change content directory to WebContent -> tick mark on generate web.xml file
 2. copy mysql-connector-8.0.13.jar file into WebContent / WEB-INF / lib 
 3.
+4.
+5. for JSTL tags we sue JSTL jar files in WEB-INF
