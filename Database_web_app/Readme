@@ -13,3 +13,15 @@ create project
   c. updating studentcontrollerservlet : updating doget method as data from form will come using get request. in doget method read command and route code depending on command. command is variable we specified in
       in add-students-form.jsp(ctrl+f). we did not specified any command variable in list-students so if request.getParameter is null we set command to "list". we route it using switch case.
       created addStudent method in studentcontrollerservlet and studentdbutil. in studentdbutil created conn and statement and create & executed sql statement
+
+8. updating student file changed and changes in file
+  a. update list-student.jsp : add update link for each student, basically create update column. link will have student id next we will prepopulate form based on student id
+  b. update studentcontrollerservlet : read new load command, read student id, get student from db, show form witj prepopulated data
+  c. updating student controller servlet to actually update student
+  d. updating studentDbUtil to update entry in database
+
+9. deleted file same like update student
+
+to run project open project in eclipse. open folder and then click on directory name and run -> run on server.
+
+
